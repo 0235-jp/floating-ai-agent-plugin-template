@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "jp.co.u0235.android.template"
+    namespace = "jp.co.u0235.floating_ai_agent_plugin.template"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "jp.co.u0235.android.template"
+        applicationId = "jp.co.u0235.floating_ai_agent_plugin.template"
         minSdk = 24
         targetSdk = 33
         versionCode = 1

@@ -1,4 +1,4 @@
-package jp.co.u0235.android.template
+package jp.co.u0235.floating_ai_agent_plugin.template
 
 import org.junit.Test
 
