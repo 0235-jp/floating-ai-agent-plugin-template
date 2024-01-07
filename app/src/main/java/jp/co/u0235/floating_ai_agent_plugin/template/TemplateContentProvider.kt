@@ -30,7 +30,7 @@ class TemplateContentProvider : ContentProvider() {
         val pathSegments = uri.pathSegments
         if (pathSegments.isEmpty()) return MatrixCursor(arrayOf("Error"))
         val functionName = pathSegments.last()
-        return if (functionName == "functions") {
+        return if (functionName == "tools") {
             val cursor = MatrixCursor(arrayOf("displayName", "functionName", "description", "parametersSchema"))
             cursor.addRow(tool)
             cursor
