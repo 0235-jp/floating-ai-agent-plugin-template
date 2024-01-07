@@ -13,16 +13,11 @@ class TemplateContentProvider : ContentProvider() {
                     "          \"properties\": {\n" +
                     "            \"location\": {\n" +
                     "              \"type\": \"string\",\n" +
-                    "              \"description\": \"The city and state, e.g. San Francisco, CA\"\n" +
-                    "            },\n" +
-                    "            \"unit\": {\n" +
-                    "              \"type\": \"string\",\n" +
-                    "              \"enum\": [\"celsius\", \"fahrenheit\"]\n" +
+                    "              \"description\": \"The city and state, e.g. Tokyo\"\n" +
                     "            }\n" +
                     "          },\n" +
                     "          \"required\": [\"location\"]\n" +
                     "        }")
-    private val result = "sunny"
 
     override fun onCreate(): Boolean {
         return true
@@ -43,8 +38,13 @@ class TemplateContentProvider : ContentProvider() {
             val cursor = MatrixCursor(arrayOf("result"))
             if (tool[1] != functionName) return cursor
             val location = uri.getQueryParameter("location")
-            val unit = uri.getQueryParameter("unit")
-            cursor.addRow(arrayOf(result))
+            if (location.equals("tokyo", ignoreCase = true)) {
+                cursor.addRow(arrayOf("{\"Weather\": \"snow\", \"3 Celsius\"}"))
+            } else if (location.equals("london", ignoreCase = true)) {
+                cursor.addRow(arrayOf("{\"Weather\": \"rain\", \"15 Celsius\"}"))
+            } else {
+                cursor.addRow(arrayOf("not support location"))
+            }
             cursor
         }
     }
