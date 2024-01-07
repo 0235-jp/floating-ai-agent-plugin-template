@@ -8,16 +8,18 @@ import android.net.Uri
 
 class TemplateContentProvider : ContentProvider() {
 
-    private val tool = arrayOf("get weather", "get_current_weather", "Get the current weather in a given location", "{\n" +
-                    "          \"type\": \"object\",\n" +
-                    "          \"properties\": {\n" +
-                    "            \"location\": {\n" +
-                    "              \"type\": \"string\",\n" +
-                    "              \"description\": \"The city and state, e.g. Tokyo\"\n" +
-                    "            }\n" +
-                    "          },\n" +
-                    "          \"required\": [\"location\"]\n" +
-                    "        }")
+    private val tool = arrayOf(
+        "get weather", "get_current_weather", "Get the current weather in a given location", "{\n" +
+                "          \"type\": \"object\",\n" +
+                "          \"properties\": {\n" +
+                "            \"location\": {\n" +
+                "              \"type\": \"string\",\n" +
+                "              \"description\": \"The city and state, e.g. Tokyo\"\n" +
+                "            }\n" +
+                "          },\n" +
+                "          \"required\": [\"location\"]\n" +
+                "        }"
+    )
 
     override fun onCreate(): Boolean {
         return true
@@ -29,23 +31,34 @@ class TemplateContentProvider : ContentProvider() {
     ): Cursor {
         val pathSegments = uri.pathSegments
         if (pathSegments.isEmpty()) return MatrixCursor(arrayOf("Error"))
-        val functionName = pathSegments.last()
-        return if (functionName == "tools") {
-            val cursor = MatrixCursor(arrayOf("displayName", "functionName", "description", "parametersSchema"))
-            cursor.addRow(tool)
-            cursor
-        } else {
-            val cursor = MatrixCursor(arrayOf("result"))
-            if (tool[1] != functionName) return cursor
-            val location = uri.getQueryParameter("location")
-            if (location.equals("tokyo", ignoreCase = true)) {
-                cursor.addRow(arrayOf("{\"Weather\": \"snow\", \"3 Celsius\"}"))
-            } else if (location.equals("london", ignoreCase = true)) {
-                cursor.addRow(arrayOf("{\"Weather\": \"rain\", \"15 Celsius\"}"))
-            } else {
-                cursor.addRow(arrayOf("not support location"))
+        return when (pathSegments.last()) {
+            "tools" -> {
+                val cursor = MatrixCursor(
+                    arrayOf(
+                        "displayName",
+                        "functionName",
+                        "description",
+                        "parametersSchema"
+                    )
+                )
+                cursor.addRow(tool)
+                cursor
             }
-            cursor
+            tool[1] -> {
+                val cursor = MatrixCursor(arrayOf("result"))
+                val location = uri.getQueryParameter("location")
+                if (location.equals("tokyo", ignoreCase = true)) {
+                    cursor.addRow(arrayOf("{\"Weather\": \"snow\", \"3 Celsius\"}"))
+                } else if (location.equals("london", ignoreCase = true)) {
+                    cursor.addRow(arrayOf("{\"Weather\": \"rain\", \"15 Celsius\"}"))
+                } else {
+                    cursor.addRow(arrayOf("not support location"))
+                }
+                cursor
+            }
+            else -> {
+                MatrixCursor(arrayOf("not support function"))
+            }
         }
     }
 
