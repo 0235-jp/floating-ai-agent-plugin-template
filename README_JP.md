@@ -1,25 +1,40 @@
 # TemplateContentProvider 📱
 
 ## 概要
-`TemplateContentProvider`は、[Floating AI agent](https://play.google.com/store/apps/details?id=jp.co.u0235.floating_ai_agent) プラグイン開発のスタート地点です！🚀 このテンプレートは、プラグインの基本的な枠組みを提供し、特定の機能に対するクエリに応じた結果を返す方法を示します。
+`TemplateContentProvider`は、[Floating AI Agent](https://play.google.com/store/apps/details?id=jp.co.u0235.floating_ai_agent)プラグイン開発のためのスタートポイントです！🚀 このテンプレートは、プラグインの基本枠組みと、特定機能へのクエリ応答方法を示しています。
 
-## Floating AI Agentプラグインの概要 🪄
-- Floating AI Agentが利用できるToolsの詳細情報を提供します！🔍
-- Floating AI AgentからのTools実行に対して、結果を返します！💫
+## Floating AI Agentプラグインの詳細 🪄
+- Floating AI Agentで使えるToolsの詳細情報を提供します！🔍
+- Toolsの実行結果をFloating AI Agentに返します！💫
 
-## 仕様 📑
+## プラグインの設定 🛠️
 ### Androidマニフェスト設定
-- Floating AI Agentは[jp.co.u0235.floating_ai_agent.ACTION_TOOLS](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/AndroidManifest.xml#L24)が設定されたproviderをプラグインとして認識します！🧐
-- Floating AI Agentは[jp.co.u0235.floating_ai_agent.permission.TOOLS_READ](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/AndroidManifest.xml#L22)パーミッションを利用してプラグインにアクセスします！🔑
+- Floating AI Agentは[jp.co.u0235.floating_ai_agent.ACTION_TOOLS](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/26f726f485d66c9cf3197d3881016d98a7408bb4/app/src/main/AndroidManifest.xml#L23C26-L23C26)が設定されたproviderをプラグインと認識します。🧐
+- `[jp.co.u0235.floating_ai_agent.permission.TOOLS_READ](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/26f726f485d66c9cf3197d3881016d98a7408bb4/app/src/main/AndroidManifest.xml#L21C39-L21C39)パーミッションでプラグインにアクセスします。🔑
 
-### ContentProviderの実装 🛠️
-- Floating AI Agentは`query()`メソッドを使ってプラグインにアクセスします！✨
-- [tools](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L35C1-L35C1)エンドポイントに対するクエリで、プラグインが提供する機能の一覧と詳細をcursorにセットして返してください。📜
-  - [パラメータ](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L36-L42)はこんな感じ：
-    - `displayName`: アプリ上に表示されるツールの名前 🏷️
-    - `functionName`: AIが認識する機能の名前 🤖
-    - `description`: AIが認識するその機能の説明 📖
-    - `parametersSchema`: AIが認識するパラメータのJSONオブジェクトを表す文字列（[OpenAI API](https://platform.openai.com/docs/api-reference/chat/create)のtoolsのparametersのJSONオブジェクトです）📊
-- Floating AI Agentはtoolsエンドポイントで設定した[functionName](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L47)をエンドポイントにして機能にアクセスし、`parametersSchema`で指定したパラメータを[pathSegments](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L49C44-L49C44)に設定します。処理した結果は[result](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/360d5850f4e695c4953f4dc7f264501dbf289be9/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L48)というカラムをcursorにセットして返してください。Floating AI Agentはcursorの1件目だけを利用します！📈
+### [プラグインの実装](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/26f726f485d66c9cf3197d3881016d98a7408bb4/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L51)
+- `query()`メソッドを通じてFloating AI Agentがプラグインにアクセスします。✨
+- `tools`エンドポイントにクエリを行い、プラグインの機能一覧と詳細をcursorにセットして返します。📜
+  - パラメータ：
+    - `source`: データソース (provider or activity)。
+    - `target`: アクセスターゲット (providerの場合はURI, activityの場合はClassName)。
+    - `displayName`: アプリ上に表示されるツール名 🏷️。
+    - `functionName`: AIが認識する機能名 🤖。
+    - `description`: AIが認識する機能の説明 📖。
+    - `displayDescription`: アプリ上に表示される機能説明 📖。
+    - `parametersSchema`: AIが認識するパラメータのJSON文字列。
 
-開発者のみなさん、このテンプレートを使って、ユニークな機能をどんどん追加していきましょう！💡🎉
+### [sourceがproviderの場合の処理](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/26f726f485d66c9cf3197d3881016d98a7408bb4/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/TemplateContentProvider.kt#L69C22-L69C22)
+- Floating AI Agentは`target`に設定されたURIに`parametersSchema`で指定したパラメータをpathSegmentsに設定してqueryを実行します。
+- 処理結果は`type`と`result`カラムをcursorにセットして返します。
+  - `type`: talk, text, image, noneのいずれか。
+    - `talk`: Floating AI Agentは`result`に設定されたテキストをそのまま読み上げます。
+    - `text`: Floating AI Agentはは`result`に設定された文字列をAIで処理して読み上げます。
+    - `image`: Floating AI Agentはは`result`に設定されたイメージオブジェクトをAIで処理して読み上げます。
+      - base64にエンコードされた画像もしくはurlを受け付けます。
+    - `none`: Floating AI Agentはは何もせず待機状態に遷移します。
+
+### [sourceがactivityの場合の処理](https://github.com/0235-jp/floating-ai-agent-plugin-template/blob/26f726f485d66c9cf3197d3881016d98a7408bb4/app/src/main/java/jp/co/u0235/floating_ai_agent_plugin/template/SharVisionActivity.kt#L17)
+- Floating AI Agentは`target`に設定されたActivityに`parametersSchema`で指定したパラメータをextraに設定してアクセスします。
+- ActivityResultで{Key: uri, Value: providerのURI}をExtraに設定して終了してください。
+- その後、Floating AI AgentはProviderにパラメータなしでqueryを実行します。cursorの設定値はsourceがproviderの場合と同様です。
