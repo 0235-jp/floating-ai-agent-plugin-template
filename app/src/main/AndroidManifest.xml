@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <permission android:name="jp.co.u0235.floating_ai_agent.permission.TOOLS_READ" />
     <uses-permission android:name="jp.co.u0235.floating_ai_agent.permission.TOOLS_READ" />
     <application
         android:allowBackup="true"
@@ -24,6 +23,24 @@
                 <action android:name="jp.co.u0235.floating_ai_agent.ACTION_TOOLS" />
             </intent-filter>
         </provider>
+        <activity
+            android:name=".CameraActivity"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="jp.co.u0235.floating_ai_agent.ACTION_TOOLS" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SharVisionActivity"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="jp.co.u0235.floating_ai_agent.ACTION_TOOLS" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

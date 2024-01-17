@@ -4,12 +4,18 @@ import android.content.ContentProvider
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.MatrixCursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
+import android.util.Base64
+import java.io.ByteArrayOutputStream
 
 class TemplateContentProvider : ContentProvider() {
 
-    private val tool = arrayOf(
-        "get weather", "get_current_weather", "Get the current weather in a given location", "{\n" +
+    private val toolWeather = arrayOf(
+        "provider", "content://jp.co.u0235.floating-ai-agent-plugin.template.provider/get_current_weather",
+        "get weather", "get_current_weather", "Get the current weather in a given location",
+        "Get the current weather in a given location", "{\n" +
                 "          \"type\": \"object\",\n" +
                 "          \"properties\": {\n" +
                 "            \"location\": {\n" +
@@ -19,6 +25,16 @@ class TemplateContentProvider : ContentProvider() {
                 "          },\n" +
                 "          \"required\": [\"location\"]\n" +
                 "        }"
+    )
+    private val toolCamera = arrayOf(
+        "activity", "jp.co.u0235.floating_ai_agent_plugin.template.CameraActivity",
+        "open camera", "open_camera", "open camera app",
+        "open camera app", "{}"
+    )
+    private val toolSharVision = arrayOf(
+        "activity", "jp.co.u0235.floating_ai_agent_plugin.template.ShareVisionActivity",
+        "shar vision", "shar_vision", "Share your vision with the user.",
+        "Share your vision with the user through.", "{}"
     )
 
     override fun onCreate(): Boolean {
@@ -35,29 +51,59 @@ class TemplateContentProvider : ContentProvider() {
             "tools" -> {
                 val cursor = MatrixCursor(
                     arrayOf(
+                        "source",
+                        "target",
                         "displayName",
                         "functionName",
                         "description",
+                        "displayDescription",
                         "parametersSchema"
                     )
                 )
-                cursor.addRow(tool)
+                cursor.addRow(toolWeather)
+                cursor.addRow(toolSharVision)
+                cursor.addRow(toolCamera)
                 cursor
             }
-            tool[1] -> {
-                val cursor = MatrixCursor(arrayOf("result"))
+
+            toolWeather[3] -> {
+                val cursor = MatrixCursor(arrayOf("type", "result"))
                 val location = uri.getQueryParameter("location")
                 if (location.equals("tokyo", ignoreCase = true)) {
-                    cursor.addRow(arrayOf("{\"Weather\": \"snow\", \"3 Celsius\"}"))
+                    cursor.addRow(arrayOf("text", "{\"Weather\": \"snow\", \"3 Celsius\"}"))
                 } else if (location.equals("london", ignoreCase = true)) {
-                    cursor.addRow(arrayOf("{\"Weather\": \"rain\", \"15 Celsius\"}"))
+                    cursor.addRow(arrayOf("text", "{\"Weather\": \"rain\", \"15 Celsius\"}"))
                 } else {
-                    cursor.addRow(arrayOf("not support location"))
+                    cursor.addRow(arrayOf("text", "not support location"))
                 }
                 cursor
             }
+
+            "open_camera" -> {
+                val cursor = MatrixCursor(arrayOf("type", "result"))
+                cursor.addRow(arrayOf("talk", "opened the camera."))
+                cursor
+            }
+
+            "get_image" -> {
+                val cursor = MatrixCursor(arrayOf("type", "result"))
+                val `is` = context!!.assets.open("sample_image.png")
+                val bitmap = BitmapFactory.decodeStream(`is`)
+                val outputStream = ByteArrayOutputStream()
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+                val byteArray = outputStream.toByteArray()
+                `is`.close()
+                val baseString = Base64.encodeToString(byteArray, Base64.NO_WRAP)
+                cursor.addRow(arrayOf("image", "data:image/png;base64,$baseString"))
+                // or use url
+                // cursor.addRow(arrayOf("image", "https://image.png" ))
+                cursor
+            }
+
             else -> {
-                MatrixCursor(arrayOf("not support function"))
+                val cursor = MatrixCursor(arrayOf("type", "result"))
+                cursor.addRow(arrayOf("none", ""))
+                cursor
             }
         }
     }
