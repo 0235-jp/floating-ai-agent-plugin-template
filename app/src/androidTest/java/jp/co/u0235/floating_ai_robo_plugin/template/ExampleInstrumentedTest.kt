@@ -1,4 +1,4 @@
-package jp.co.u0235.floating_ai_agent_plugin.template
+package jp.co.u0235.floating_ai_robo_plugin.template
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4

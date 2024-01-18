@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="jp.co.u0235.floating_ai_agent.permission.TOOLS_READ" />
+    <uses-permission android:name="jp.co.u0235.floating_ai_robo.permission.TOOLS_READ" />
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -15,12 +15,12 @@
         tools:targetApi="31">
         <provider
             android:name=".TemplateContentProvider"
-            android:authorities="jp.co.u0235.floating-ai-agent-plugin.template.provider"
+            android:authorities="jp.co.u0235.floating-ai-robo-plugin.template.provider"
             android:enabled="true"
             android:exported="true"
-            android:readPermission="jp.co.u0235.floating_ai_agent.permission.TOOLS_READ">
+            android:readPermission="jp.co.u0235.floating_ai_robo.permission.TOOLS_READ">
             <intent-filter>
-                <action android:name="jp.co.u0235.floating_ai_agent.ACTION_TOOLS" />
+                <action android:name="jp.co.u0235.floating_ai_robo.ACTION_TOOLS" />
             </intent-filter>
         </provider>
         <activity
@@ -29,16 +29,16 @@
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="jp.co.u0235.floating_ai_agent.ACTION_TOOLS" />
+                <action android:name="jp.co.u0235.floating_ai_robo.ACTION_TOOLS" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".SharVisionActivity"
+            android:name=".ShareVisionActivity"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT"/>
-                <action android:name="jp.co.u0235.floating_ai_agent.ACTION_TOOLS" />
+                <action android:name="jp.co.u0235.floating_ai_robo.ACTION_TOOLS" />
             </intent-filter>
         </activity>
     </application>

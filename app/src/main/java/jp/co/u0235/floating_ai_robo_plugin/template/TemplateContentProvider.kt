@@ -1,4 +1,4 @@
-package jp.co.u0235.floating_ai_agent_plugin.template
+package jp.co.u0235.floating_ai_robo_plugin.template
 
 import android.content.ContentProvider
 import android.content.ContentValues
@@ -13,7 +13,7 @@ import java.io.ByteArrayOutputStream
 class TemplateContentProvider : ContentProvider() {
 
     private val toolWeather = arrayOf(
-        "provider", "content://jp.co.u0235.floating-ai-agent-plugin.template.provider/get_current_weather",
+        "provider", "content://jp.co.u0235.floating-ai-robo-plugin.template.provider/get_current_weather",
         "get weather", "get_current_weather", "Get the current weather in a given location",
         "Get the current weather in a given location", "{\n" +
                 "          \"type\": \"object\",\n" +
@@ -27,14 +27,14 @@ class TemplateContentProvider : ContentProvider() {
                 "        }"
     )
     private val toolCamera = arrayOf(
-        "activity", "jp.co.u0235.floating_ai_agent_plugin.template.CameraActivity",
+        "activity", "jp.co.u0235.floating_ai_robo_plugin.template.CameraActivity",
         "open camera", "open_camera", "open camera app",
         "open camera app", "{}"
     )
     private val toolSharVision = arrayOf(
-        "activity", "jp.co.u0235.floating_ai_agent_plugin.template.ShareVisionActivity",
-        "shar vision", "shar_vision", "Share your vision with the user.",
-        "Share your vision with the user through.", "{}"
+        "activity", "jp.co.u0235.floating_ai_robo_plugin.template.ShareVisionActivity",
+        "shar vision", "shar_vision", "Share your vision with users using the camera.",
+        "Share your vision with users using the camera.", "{}"
     )
 
     override fun onCreate(): Boolean {
