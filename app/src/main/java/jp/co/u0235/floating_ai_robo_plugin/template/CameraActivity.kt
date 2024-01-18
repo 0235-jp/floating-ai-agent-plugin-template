@@ -1,4 +1,4 @@
-package jp.co.u0235.floating_ai_agent_plugin.template
+package jp.co.u0235.floating_ai_robo_plugin.template
 
 import android.content.Intent
 import android.os.Handler
@@ -12,7 +12,7 @@ class CameraActivity : ComponentActivity() {
         val resultIntent = Intent()
         resultIntent.putExtra(
             "uri",
-            "content://jp.co.u0235.floating-ai-agent-plugin.template.provider/open_camera"
+            "content://jp.co.u0235.floating-ai-robo-plugin.template.provider/open_camera"
         )
         setResult(RESULT_OK, resultIntent)
         finish()
