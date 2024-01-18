@@ -33,7 +33,7 @@ class TemplateContentProvider : ContentProvider() {
     )
     private val toolSharVision = arrayOf(
         "activity", "jp.co.u0235.floating_ai_robo_plugin.template.ShareVisionActivity",
-        "shar vision", "shar_vision", "Share your vision with users using the camera.",
+        "shar vision", "shar_image", "Share your vision with users using the camera.",
         "Share your vision with users using the camera.", "{}"
     )
 
