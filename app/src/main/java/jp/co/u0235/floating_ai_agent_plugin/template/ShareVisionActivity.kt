@@ -4,7 +4,7 @@ import android.content.Intent
 import androidx.activity.ComponentActivity
 import androidx.appcompat.widget.AppCompatButton
 
-class SharVisionActivity : ComponentActivity() {
+class ShareVisionActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: android.os.Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_share_vision)

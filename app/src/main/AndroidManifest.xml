@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SharVisionActivity"
+            android:name=".ShareVisionActivity"
             android:enabled="true"
             android:exported="true">
             <intent-filter>

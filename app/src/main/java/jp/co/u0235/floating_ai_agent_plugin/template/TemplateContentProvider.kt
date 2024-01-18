@@ -33,8 +33,8 @@ class TemplateContentProvider : ContentProvider() {
     )
     private val toolSharVision = arrayOf(
         "activity", "jp.co.u0235.floating_ai_agent_plugin.template.ShareVisionActivity",
-        "shar vision", "shar_vision", "Share your vision with the user.",
-        "Share your vision with the user through.", "{}"
+        "shar vision", "shar_vision", "Share your vision with users using the camera.",
+        "Share your vision with users using the camera.", "{}"
     )
 
     override fun onCreate(): Boolean {
